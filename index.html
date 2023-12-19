@@ -9,20 +9,20 @@
 
     <body>
 
-        <h1>Viens apprendre les verbes irréguliers !</h1>
+        <h1>Apprends les verbes irréguliers !</h1>
 
         <fieldset id="choix">
             <legend>Que veux-tu travailler ?</legend> 
             <div>
-                <input type="radio" name="choix" id="infinitif" value="0" checked/>
+                <input type="radio" name="choix" id="infinitif" value="1" checked/>
                 <label for="infinitif">Infinitif</label>
             </div>
             <div>
-                <input type="radio" name="choix" id="preterit" value="1"/>
+                <input type="radio" name="choix" id="preterit" value="2"/>
                 <label for="preterit">Prétérit</label>
             </div>
             <div>
-                <input type="radio" name="choix" id="partPasse" value="2"/>
+                <input type="radio" name="choix" id="partPasse" value="3"/>
                 <label for="partPasse">Participe passé</label>
             </div>
             <button id="btnValiderChoix">OK</button>
@@ -34,6 +34,7 @@
             <input type="text" id="reponse"/>
             <button id="btnValiderReponse">OK</button>
         </div>
+        <label id="correction"></label><br/>
         <label id="scoreLabel"></label>
     </body>
 </html>

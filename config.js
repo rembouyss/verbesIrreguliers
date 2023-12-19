@@ -1,8 +1,13 @@
-const verbes = ['lire','écrire','mettre', 'penser']
-const infinitif = ['read','write','put','think']
-const preterit = ['read','wrote','put','thought']
-const partPasse = ['read','written','put','thought']
-let reponses = ""
+const verbes = [
+    ['lire','read','read','read'],
+    ['mettre','put','put','put'],
+    ['penser','think','thought','thought'],
+    ['partir','leave','left','left'],
+    ['écrire','write','wrote','written'],
+    ['dormir','sleep','slept','slept'],
+    ['courir','run','ran','run']
+ //   ['','','',''],
+    ]
 
 // retourne un entier aléatoire entre min et max
 function getRnd(min,max) {

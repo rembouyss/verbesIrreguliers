@@ -1,53 +1,73 @@
+// vaudra 1,2,3 en fonction de si on choisit l'infinitif, le prétérit, le part passé
+let choix = 0
 
 // On regarde ce qui a été choisi lors du clic sur le bouton
-let btnOK = document.getElementById("btnValiderChoix")
-
-btnOK.addEventListener("click", () => {
+let btnValiderChoix = document.getElementById("btnValiderChoix")
+btnValiderChoix.addEventListener("click", () => {
     let listeRadio = document.querySelectorAll("#choix input")
     let i=0
     while (!listeRadio[i].checked) i++
-    reponses = choisirReponses(listeRadio[i].value)
-    determinerConsigne(listeRadio[i].value)
+    choix = parseInt(listeRadio[i].value)
+    determinerConsigne(choix)
     lancerJeu()
 })
 
-// détermine si on va demander des infinitifs, prétérits ou paticipe passés
-function choisirReponses(choix) {
-    if (choix === "0") return infinitif
-    if (choix === "1") return preterit
-    return partPasse
-}
-
 // gère ce qui est écrit, la consigne
-function determinerConsigne(choix) {
+function determinerConsigne(n) {
     let possibilites = ["'infinitif","e prétérit","e participe passé"];
     let consigne = document.getElementById("consigne");
-    consigne.innerText = `Donne l${possibilites[choix]} des verbes suivants en anglais`;
+    consigne.innerText = `Donne l${possibilites[n-1]} de :`;
 }
 
+
+
 function lancerJeu() {
+
+    // quand un verbe de verbesJeu sera demandé, on le supprimera ensuite
+    let verbesJeu = [...verbes]
+
+    let possibilites = ["'infinitif","e prétérit","e participe passé"]
+
     let score = 0
-    let cpt = 0
+    let cptQuestions = 0
     let question = document.getElementById("question")
-    let index = getRnd(0,verbes.length-1)
-    question.innerText = verbes[index]
+    let scoreLabel = document.getElementById("scoreLabel");
+    let index = getRnd(0,verbesJeu.length-1)
+    question.innerText = verbesJeu[index][0]
+
+    let correction = document.getElementById("correction")
 
     let btnValiderReponse = document.getElementById("btnValiderReponse")
 
     btnValiderReponse.addEventListener("click", () => {
-        cpt++;
+        cptQuestions++;
 
-        let reponse = document.querySelector("#zoneSaisie input");
-        if (reponse.value === reponses[index]) score++;
-        reponse.value = ""
         
-        let scoreLabel = document.getElementById("scoreLabel");
-        console.log(scoreLabel)
-        scoreLabel.innerText = `Score : ${score} / ${cpt}`;
+        if (cptQuestions < verbes.length) {
+            let reponse = document.getElementById("reponse");
+            // on regarde si la réponse est bonne
+            if (reponse.value === verbesJeu[index][choix]) {
+                score++
+                correction.innerText = "Bravo !"
+            }
+            else correction.innerText = `Non, l${possibilites[choix-1]} de ${verbesJeu[index][0]} est : ${verbesJeu[index][choix]}`
 
-        index = getRnd(0,verbes.length-1);
-        question.innerText = verbes[index];
+            reponse.value = ""
+
+            // on enlève de la liste le verbe demandé
+            verbesJeu.splice(index,1)
+
+            // MàJ du score
+            scoreLabel.innerText = `Score : ${score} / ${cptQuestions}`;
+
+            index = getRnd(0,verbesJeu.length-1);
+            question.innerText = verbesJeu[index][0];
+        }
+        else {
+            let consigne = document.getElementById("consigne");
+            consigne.innerText = "LE JEU EST FINI";
+            question.innerText = ""
+        }
     })
-    
     
 }
