@@ -69,5 +69,4 @@ function lancerJeu() {
             question.innerText = ""
         }
     })
-    
 }
