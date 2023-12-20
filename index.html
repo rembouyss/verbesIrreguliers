@@ -11,7 +11,7 @@
 
         <h1>Apprends les verbes irréguliers !</h1>
 
-        <div>
+        <table><tr><td>
             <fieldset id="choix">
                 <legend>Que veux-tu travailler ?</legend> 
                 <div>
@@ -28,10 +28,19 @@
                 </div>
                 <button id="btnValiderChoix">OK</button>
             </fieldset>
+            </td>
+            <td>
             <form>
-                IL FAUT METTRE UN FORMULAIRE
+                <label for="nomJoueur">Nom :</label>
+                <input type="text" id="nomJoueur" placeholder="Ton nom" required>
+                <label for="mailJoueur">mail :</label>
+                <input type="text" id="mailJoueur" placeholder="example@domaine.com" required>
+                <label for="nbQestions">Nombre de questions</label>
+                <input type="text" id="nbQuestions">
+                <input type="submit" value="Envoyer">
             </form>
-        </div>
+        </td></tr></table>
+
         <label id="consigne"></label>
         <div id="question"></div>
         <div id ="zoneSaisie">

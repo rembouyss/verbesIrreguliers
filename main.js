@@ -1,17 +1,6 @@
 // vaudra 1,2,3 en fonction de si on choisit l'infinitif, le prétérit, le part passé
 let choix = 0
 
-// On regarde ce qui a été choisi lors du clic sur le bouton
-let btnValiderChoix = document.getElementById("btnValiderChoix")
-btnValiderChoix.addEventListener("click", () => {
-    let listeRadio = document.querySelectorAll("#choix input")
-    let i=0
-    while (!listeRadio[i].checked) i++
-    choix = parseInt(listeRadio[i].value)
-    determinerConsigne(choix)
-    lancerJeu()
-})
-
 // gère ce qui est écrit, la consigne
 function determinerConsigne(n) {
     let possibilites = ["'infinitif","e prétérit","e participe passé"];
@@ -19,9 +8,8 @@ function determinerConsigne(n) {
     consigne.innerText = `Donne l${possibilites[n-1]} de :`;
 }
 
-
-
 function lancerJeu() {
+    determinerConsigne(choix)
 
     // quand un verbe de verbesJeu sera demandé, on le supprimera ensuite
     let verbesJeu = [...verbes]
@@ -70,3 +58,48 @@ function lancerJeu() {
         }
     })
 }
+
+function verifNom(nom){
+    if (nom.length < 3) throw new Error(`Le nom ${nom} est trop court`)
+}
+function verfiMail(mail){
+    let regexpmail = new RegExp("[a-zA-z0-9-._]+@[a-zA-z0-9-_]+\\.[a-z]+")
+    if(!regexpmail.test(mail)) throw new Error(`${mail} n'est pas une adresse vailde`)
+}
+function verifNbQuestions(nb) {
+    let regexpquestions = new RegExp("^[\\d]+$")
+    if(!regexpquestions.test(nb)) throw new Error(`Le nombre de questions doit être un nombre entier positif`)
+    else if (parseInt(nb) > verbes.length) throw new Error(`Le nombre de questions ne doit pas dépasser ${verbes.length}`)
+}
+
+function verifFormEtLancerJeu() {
+    try {
+        let nom = document.getElementById("nomJoueur").value
+        verifNom(nom)
+
+        let mail = document.getElementById("mailJoueur").value
+        verfiMail(mail)
+
+        let nbQuestions = document.getElementById("nbQuestions").value
+        verifNbQuestions(nbQuestions)
+
+        lancerJeu()
+    }
+    catch(erreur) {
+        console.log(erreur)
+    }
+}
+
+
+let btnValiderChoix = document.getElementById("btnValiderChoix")
+btnValiderChoix.addEventListener("click", () => {
+    // On regarde ce qui a été choisi lors du clic sur le bouton
+    let listeRadio = document.querySelectorAll("#choix input")
+    let i=0
+    while (!listeRadio[i].checked) i++
+    choix = parseInt(listeRadio[i].value)
+
+    // on vérifie sir les info du formulaire sont bien rentrées
+    verifFormEtLancerJeu()
+   
+})
