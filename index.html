@@ -4,6 +4,7 @@
         <title>Verbes irréguliers</title>
         <link rel="stylesheet" href="style.css">
         <script src="config.js"></script>
+        <script src="popup.js" defer></script>
         <script src="main.js" defer></script>
     </head>
 
@@ -31,20 +32,24 @@
                     <input type="radio" name="choix" id="partPasse" value="3"/>
                     <label for="partPasse">Participe passé</label>
                 </div>
-                <button id="btnValiderChoix">OK</button>
             </fieldset>
             </td>
             <td>
-            <form>
+            <form novalidate>
                 <label for="nomJoueur">Nom :</label>
                 <input type="text" id="nomJoueur" placeholder="Ton nom" required>
                 <label for="mailJoueur">mail :</label>
                 <input type="text" id="mailJoueur" placeholder="example@domaine.com" required>
                 <label for="nbQestions">Nombre de questions</label>
                 <input type="text" id="nbQuestions">
-                <input type="submit" value="Envoyer">
+                <input type="submit" id="btnValiderForm" value="Envoyer">
                 <label id="erreurFormulaire"></label>
             </form>
         </td></tr></table>
+        <div id="popupbg">
+            <div id="popup">
+                <span> Salut, c'est la popup</span>
+            </div>
+        </div>
     </body>
 </html>

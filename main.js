@@ -124,7 +124,7 @@ function changeClass(input,check) {
 function verifFormEtLancerJeu() {
     try {
         let nom = document.getElementById("nomJoueur")
-//        verifNom(nom)
+        verifNom(nom)
 
         let mail = document.getElementById("mailJoueur")
 //        verfiMail(mail)
@@ -141,8 +141,9 @@ function verifFormEtLancerJeu() {
 }
 
 
-let btnValiderChoix = document.getElementById("btnValiderChoix")
-btnValiderChoix.addEventListener("click", () => {
+let btnValiderForm = document.getElementById("btnValiderForm")
+btnValiderForm.addEventListener("click", () => {
+
     // On regarde ce qui a été choisi lors du clic sur le bouton
     let listeRadio = document.querySelectorAll("#choix input")
     let i=0
