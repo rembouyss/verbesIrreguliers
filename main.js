@@ -8,7 +8,35 @@ function determinerConsigne(n) {
     consigne.innerText = `Donne l${possibilites[n-1]} de :`;
 }
 
+function creerZoneJeu() {
+    let zoneJeu = document.createElement("div")
+
+    let codeZoneJeu = `
+        <label id="checkResult"></label>
+        <label id="consigne"></label>
+        <div id="question"></div>
+        <div id ="zoneSaisie">
+            <input type="text" id="reponse"/>
+            <button id="btnValiderReponse">OK</button>
+        </div>
+        <label id="correction"></label><br/>
+        <label id="scoreLabel"></label>
+    `
+    
+    zoneJeu.innerHTML = codeZoneJeu
+
+    let body = document.querySelector("body")
+    body.appendChild(zoneJeu)
+
+    let checktest = document.getElementById("checktest").checked
+    let checkResult = document.getElementById("checkResult")
+    if (checktest) checkResult.innerText = "Tu as refusé de cocher la case"
+    else           checkResult.innerText = "Tu n'as pas refusé de cocher la case"
+}
+
 function lancerJeu() {
+  
+    creerZoneJeu()
     determinerConsigne(choix)
 
     // quand un verbe de verbesJeu sera demandé, on le supprimera ensuite
@@ -29,7 +57,6 @@ function lancerJeu() {
 
     btnValiderReponse.addEventListener("click", () => {
         cptQuestions++;
-
         
         if (cptQuestions < verbes.length) {
             let reponse = document.getElementById("reponse");
@@ -38,7 +65,8 @@ function lancerJeu() {
                 score++
                 correction.innerText = "Bravo !"
             }
-            else correction.innerText = `Non, l${possibilites[choix-1]} de ${verbesJeu[index][0]} est : ${verbesJeu[index][choix]}`
+            else correction.innerText = `Non, l${possibilites[choix-1]} de ${verbesJeu[index][0]} est : ${verbesJeu[index][choix]}
+                                         Tu as écrit ${reponse.value}`
 
             reponse.value = ""
 
@@ -60,33 +88,55 @@ function lancerJeu() {
 }
 
 function verifNom(nom){
-    if (nom.length < 3) throw new Error(`Le nom ${nom} est trop court`)
+    if (nom.value.length < 3) {
+        changeClass(nom,1)
+        throw new Error(`Le nom ${nom.value} est trop court`)
+    }
+    else changeClass(nom,0)
+    
 }
 function verfiMail(mail){
     let regexpmail = new RegExp("[a-zA-z0-9-._]+@[a-zA-z0-9-_]+\\.[a-z]+")
-    if(!regexpmail.test(mail)) throw new Error(`${mail} n'est pas une adresse vailde`)
+    if(!regexpmail.test(mail.value)) {
+        changeClass(mail,1)
+        throw new Error(`${mail.value} n'est pas une adresse vailde`)
+    }
+    changeClass(mail,0)
 }
 function verifNbQuestions(nb) {
     let regexpquestions = new RegExp("^[\\d]+$")
-    if(!regexpquestions.test(nb)) throw new Error(`Le nombre de questions doit être un nombre entier positif`)
-    else if (parseInt(nb) > verbes.length) throw new Error(`Le nombre de questions ne doit pas dépasser ${verbes.length}`)
+    if(!regexpquestions.test(nb.value)) {
+        changeClass(nb,1)
+        throw new Error(`Le nombre de questions doit être un nombre entier positif`)
+    }
+    else if (parseInt(nb.value) > verbes.length) {
+        changeClass(nb,1)
+        throw new Error(`Le nombre de questions ne doit pas dépasser ${verbes.length}`)
+    }
+    else changeClass(nb,0)
+}
+
+function changeClass(input,check) {
+    if (check) input.classList.add('error')
+    else       input.classList.remove('error')
 }
 
 function verifFormEtLancerJeu() {
     try {
-        let nom = document.getElementById("nomJoueur").value
-        verifNom(nom)
+        let nom = document.getElementById("nomJoueur")
+//        verifNom(nom)
 
-        let mail = document.getElementById("mailJoueur").value
-        verfiMail(mail)
+        let mail = document.getElementById("mailJoueur")
+//        verfiMail(mail)
 
-        let nbQuestions = document.getElementById("nbQuestions").value
-        verifNbQuestions(nbQuestions)
+        let nbQuestions = document.getElementById("nbQuestions")
+//        verifNbQuestions(nbQuestions)
 
         lancerJeu()
     }
     catch(erreur) {
-        console.log(erreur)
+        let erreurFormulaire = document.getElementById("erreurFormulaire")
+        erreurFormulaire.innerText = erreur
     }
 }
 

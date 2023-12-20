@@ -10,6 +10,11 @@
     <body>
 
         <h1>Apprends les verbes irréguliers !</h1>
+        <label for="checktest">Je refuse de cocher cette case</label>
+        <input type="checkbox" id="checktest">
+
+        <label for="checkpopup">Je veux une popup</label>
+        <input type="checkbox" id="checkpopup">
 
         <table><tr><td>
             <fieldset id="choix">
@@ -38,16 +43,8 @@
                 <label for="nbQestions">Nombre de questions</label>
                 <input type="text" id="nbQuestions">
                 <input type="submit" value="Envoyer">
+                <label id="erreurFormulaire"></label>
             </form>
         </td></tr></table>
-
-        <label id="consigne"></label>
-        <div id="question"></div>
-        <div id ="zoneSaisie">
-            <input type="text" id="reponse"/>
-            <button id="btnValiderReponse">OK</button>
-        </div>
-        <label id="correction"></label><br/>
-        <label id="scoreLabel"></label>
     </body>
 </html>

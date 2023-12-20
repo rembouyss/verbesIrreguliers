@@ -9,6 +9,9 @@ table{
 }
 
 h1 {
-    color: rgb(36, 36, 189)
+    color: rgb(187,255,0)
 }
 
+.error {
+    box-shadow:0 0 10px rgb(187, 255, 0);
+}
