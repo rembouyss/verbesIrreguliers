@@ -34,7 +34,7 @@ function creerZoneJeu() {
     else           checkResult.innerText = "Tu n'as pas refusé de cocher la case"
 }
 
-function lancerJeu() {
+function lancerJeu(nbQuestions) {
   
     creerZoneJeu()
     determinerConsigne(choix)
@@ -57,25 +57,24 @@ function lancerJeu() {
 
     btnValiderReponse.addEventListener("click", () => {
         cptQuestions++;
-        
-        if (cptQuestions < verbes.length) {
-            let reponse = document.getElementById("reponse");
-            // on regarde si la réponse est bonne
-            if (reponse.value === verbesJeu[index][choix]) {
-                score++
-                correction.innerText = "Bravo !"
-            }
-            else correction.innerText = `Non, l${possibilites[choix-1]} de ${verbesJeu[index][0]} est : ${verbesJeu[index][choix]}
-                                         Tu as écrit ${reponse.value}`
+        let reponse = document.getElementById("reponse");
+        // on regarde si la réponse est bonne
+        if (reponse.value === verbesJeu[index][choix]) {
+            score++
+            correction.innerText = "Bravo !"
+        }
+        else correction.innerText = `Non, l${possibilites[choix-1]} de ${verbesJeu[index][0]} est : ${verbesJeu[index][choix]}
+                                     Tu as écrit ${reponse.value}`
 
-            reponse.value = ""
+        reponse.value = ""
 
-            // on enlève de la liste le verbe demandé
-            verbesJeu.splice(index,1)
+        // on enlève de la liste le verbe demandé
+        verbesJeu.splice(index,1)
 
-            // MàJ du score
-            scoreLabel.innerText = `Score : ${score} / ${cptQuestions}`;
+        // MàJ du score
+        scoreLabel.innerText = `Score : ${score} / ${cptQuestions}`;
 
+        if (cptQuestions < nbQuestions) {
             index = getRnd(0,verbesJeu.length-1);
             question.innerText = verbesJeu[index][0];
         }
@@ -83,20 +82,21 @@ function lancerJeu() {
             let consigne = document.getElementById("consigne");
             consigne.innerText = "LE JEU EST FINI";
             question.innerText = ""
+            btnValiderReponse.disabled = true
         }
+        
     })
 }
 
-function verifNom(nom){
+function verifNom(nom) {
     if (nom.value.length < 3) {
         changeClass(nom,1)
         throw new Error(`Le nom ${nom.value} est trop court`)
     }
     else changeClass(nom,0)
-    
 }
-function verfiMail(mail){
-    let regexpmail = new RegExp("[a-zA-z0-9-._]+@[a-zA-z0-9-_]+\\.[a-z]+")
+function verfiMail(mail) {
+    let regexpmail = new RegExp("^[\\w-._]+@[\\w-_]+\\.[\\w]+$")
     if(!regexpmail.test(mail.value)) {
         changeClass(mail,1)
         throw new Error(`${mail.value} n'est pas une adresse vailde`)
@@ -104,14 +104,10 @@ function verfiMail(mail){
     changeClass(mail,0)
 }
 function verifNbQuestions(nb) {
-    let regexpquestions = new RegExp("^[\\d]+$")
+    let regexpquestions = new RegExp("^[1-9][\\d]*$")
     if(!regexpquestions.test(nb.value)) {
         changeClass(nb,1)
-        throw new Error(`Le nombre de questions doit être un nombre entier positif`)
-    }
-    else if (parseInt(nb.value) > verbes.length) {
-        changeClass(nb,1)
-        throw new Error(`Le nombre de questions ne doit pas dépasser ${verbes.length}`)
+        throw new Error(`Le nombre de questions doit être un nombre entier entre 1 et ${verbes.length}`)
     }
     else changeClass(nb,0)
 }
@@ -127,12 +123,14 @@ function verifFormEtLancerJeu() {
         verifNom(nom)
 
         let mail = document.getElementById("mailJoueur")
-//        verfiMail(mail)
+        verfiMail(mail)
 
         let nbQuestions = document.getElementById("nbQuestions")
-//        verifNbQuestions(nbQuestions)
+        verifNbQuestions(nbQuestions)
 
-        lancerJeu()
+        btnValiderForm.disabled = true
+
+        lancerJeu(nbQuestions.value)
     }
     catch(erreur) {
         let erreurFormulaire = document.getElementById("erreurFormulaire")
@@ -140,10 +138,10 @@ function verifFormEtLancerJeu() {
     }
 }
 
-
 let btnValiderForm = document.getElementById("btnValiderForm")
-btnValiderForm.addEventListener("click", () => {
-
+btnValiderForm.addEventListener("click", (event) => {
+    
+    event.preventDefault()
     // On regarde ce qui a été choisi lors du clic sur le bouton
     let listeRadio = document.querySelectorAll("#choix input")
     let i=0
@@ -152,5 +150,4 @@ btnValiderForm.addEventListener("click", () => {
 
     // on vérifie sir les info du formulaire sont bien rentrées
     verifFormEtLancerJeu()
-   
 })
