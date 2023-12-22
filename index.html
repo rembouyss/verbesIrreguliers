@@ -3,7 +3,9 @@
     <head>
         <title>Verbes irréguliers</title>
         <link rel="stylesheet" href="style.css">
+        <script src="listeVerbes.js"></script>
         <script src="config.js"></script>
+        <script src="creerZones.js" defer></script>
         <script src="popup.js" defer></script>
         <script src="main.js" defer></script>
     </head>
@@ -11,45 +13,8 @@
     <body>
 
         <h1>Apprends les verbes irréguliers !</h1>
-        <label for="checktest">Je refuse de cocher cette case</label>
-        <input type="checkbox" id="checktest">
-
-        <label for="checkpopup">Je veux une popup</label>
-        <input type="checkbox" id="checkpopup">
-
-        <table><tr><td>
-            <fieldset id="choix">
-                <legend>Que veux-tu travailler ?</legend> 
-                <div>
-                    <input type="radio" name="choix" id="infinitif" value="1" checked/>
-                    <label for="infinitif">Infinitif</label>
-                </div>
-                <div>
-                    <input type="radio" name="choix" id="preterit" value="2"/>
-                    <label for="preterit">Prétérit</label>
-                </div>
-                <div>
-                    <input type="radio" name="choix" id="partPasse" value="3"/>
-                    <label for="partPasse">Participe passé</label>
-                </div>
-            </fieldset>
-            </td>
-            <td>
-            <form novalidate>
-                <label for="nomJoueur">Nom :</label>
-                <input type="text" id="nomJoueur" placeholder="Ton nom" required>
-                <label for="mailJoueur">mail :</label>
-                <input type="text" id="mailJoueur" placeholder="example@domaine.com" required>
-                <label for="nbQestions">Nombre de questions</label>
-                <input type="text" id="nbQuestions">
-                <input type="submit" id="btnValiderForm" value="Envoyer">
-                <label id="erreurFormulaire"></label>
-            </form>
-        </td></tr></table>
-        <div class="popupbg">
-            <div id="popup">
-                <span> Salut, c'est la popup</span>
-            </div>
+        
+        <div id="zoneAction">
         </div>
     </body>
 </html>

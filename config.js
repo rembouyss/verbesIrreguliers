@@ -1,13 +1,10 @@
-const verbes = [
-    ['lire','read','read','read'],
-    ['mettre','put','put','put'],
-    ['penser','think','thought','thought'],
-    ['partir','leave','left','left'],
-    ['écrire','write','wrote','written'],
-    ['dormir','sleep','slept','slept'],
-    ['courir','run','ran','run']
- //   ['','','',''],
-    ]
+let textVerbes = []
+console.log(listeVerbes[70])
+console.log(listeVerbes[70])
+
+// for (let i in listeVerbes) textVerbes.push(i.toString())
+console.log(textVerbes)
+
 
 // retourne un entier aléatoire entre min et max
 function getRnd(min,max) {
